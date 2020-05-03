@@ -7,10 +7,12 @@ use Yii;
 use yii\helpers\Json;
 use app\models\Collection;
 use app\models\Score;
+use yii\rest\ActiveController;
 
-class TopicController extends Controller
+class TopicController extends ActiveController
 {
-    protected function fetch($template, $vars = [], $config = []): void
+    public $modelClass = 'common\models\User';
+    protected function fetch($template, $vars = [], $config = [])
     {
         Yii::$app->response->send();
         $this->view->fetch($template, $vars, $config);
@@ -19,9 +21,10 @@ class TopicController extends Controller
     //获取题库
     public function actionInfo()
     {
-        $headers = Yii::$app->request->headers;
-        $request = Yii::$app->request->post();
-        $info = Topic::find()->where(['type' => $request['type']])->asArray()->all();
+//        $headers = Yii::$app->request->headers;
+//        $request = Yii::$app->request->post();
+        $info = Topic::find()->where(['type' => 1])->asArray()->all();
+        print_r($info);exit;
         return Json::encode($info);
     }
 
