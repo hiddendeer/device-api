@@ -44,7 +44,7 @@ class SignUpController extends ActiveController
 
         if (strlen($request['username']) > 10 || strlen($request['username']) < 3) {
             $data = [
-                'errCode' => 3,
+                'code' => 3,
                 'message' => '用户名长度需要在3-10位之间',
                 'data' => []
             ];
@@ -53,7 +53,7 @@ class SignUpController extends ActiveController
 
         if (strlen($request['password']) > 40 || strlen($request['password']) < 3) {
             $data = [
-                'errCode' => 3,
+                'code' => 3,
                 'message' => '密码长度不能低于6位',
                 'data' => []
             ];
@@ -67,7 +67,7 @@ class SignUpController extends ActiveController
             ->one();
         if (!empty($user_info)) {
             $data = [
-                'errCode' => 3,
+                'code' => 3,
                 'message' => '用户名已存在',
                 'data' => []
             ];

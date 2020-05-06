@@ -42,6 +42,17 @@ return [
                     'controller' => 'device-record',
                     'extraPatterns' => [
                         'POST create-record' => 'create-record',
+                        'GET record-index' => 'record-index',
+                        'GET record-view' => 'record-view',
+                    ],
+                    'pluralize' => false
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'info',
+                    'extraPatterns' => [
+                        'GET user-info' => 'user-info',
+                        'GET my-record-index' => 'my-record-index',
                     ],
                     'pluralize' => false
                 ],

@@ -27,7 +27,7 @@ class SignInController extends ActiveController
         //验证账号密码正确
         if (empty($res_info)) {
             $data = [
-                'errCode' => 301,
+                'code' => 301,
                 'message' => '用户名不存在',
                 'data' => []
             ];
@@ -36,7 +36,7 @@ class SignInController extends ActiveController
         }
         if (!password_verify($request['password'], $res_info['user_password'])) {
             $data = [
-                'errCode' => 302,
+                'code' => 302,
                 'message' => '密码错误',
                 'data' => []
             ];
@@ -45,7 +45,7 @@ class SignInController extends ActiveController
         }
 
         //token
-        $key = '344'; //key
+        $key = '321'; //key
         $time = time(); //当前时间
         $token = [
             'iss' => 'http://www.hiddendeer.cn', //签发者 可选
@@ -54,7 +54,7 @@ class SignInController extends ActiveController
             'nbf' => $time, //(Not Before)：某个时间点后才能访问，比如设置time+30，表示当前时间30秒后才能使用
             'exp' => $time + 7200, //过期时间,这里设置2个小时
             'data' => [ //自定义信息，不要定义敏感信息
-                'username' => $res_info['user_name']
+                'u_id' => $res_info['id']
             ]
         ];
 
@@ -62,7 +62,11 @@ class SignInController extends ActiveController
 
         //token存储到redis,并且设置过期时间为两小时
         $redis->set($res_info['id'], $token);
-        Yii::$app->redis->expire($res_info['id'],7200);
+        $redis->expire($res_info['id'], 10000);
+        $expire_time = $redis->ttl($res_info['id']);
+
+        if (empty($expire_time)) return ['errCode' => 302, 'message' => 'token验证失败', 'data' => []];
+        $timestmp = strtotime("+$expire_time second", time());
 
         $res = [
             'id' => $res_info['id'],
@@ -73,7 +77,8 @@ class SignInController extends ActiveController
             'age' => $res_info['age'],
             'avatar' => $res_info['avatar'],
             'address' => $res_info['address'],
-            'create_time' => date('Y-m-d H:i:s', $res_info['create_time']),
+            'expire' => $timestmp,
+            'create_time' => $res_info['create_time'],
             'token' => $token
         ];
 
