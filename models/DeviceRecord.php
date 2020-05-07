@@ -21,8 +21,7 @@ class DeviceRecord extends ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'u_id', 'device_no', 'pro_name', 'status','create_time','store_status','store_text','delete_flag'], 'required'],
-            [['device_name'], 'string', 'max' => 200],
+            [['id', 'u_id', 'device_no', 'pro_name', 'status','create_time','store_status','store_text','delete_flag'], 'required']
         ];
     }
 
@@ -38,7 +37,6 @@ class DeviceRecord extends ActiveRecord
             'device_no' => 'device_no',
             'pro_name' => 'pro_name',
             'status' => 'status',
-            'device_name' => 'device_name',
             'store_status' => 'store_status',
             'store_text' => 'store_text',
             'delete_flag' => 'delete_flag',
