@@ -27,7 +27,7 @@ class SignUpController extends ActiveController
         //对用户名和密码规范验证
         if (!preg_match('/^[A-Za-z0-9_\x{4e00}-\x{9fa5}]+$/u', $request['username'])) {
             $data = [
-                'errCode' => 3,
+                'code' => 3,
                 'message' => '用户名不规范',
                 'data' => []
             ];
@@ -35,8 +35,17 @@ class SignUpController extends ActiveController
         }
         if (!preg_match('/^[A-Za-z0-9_\x{4e00}-\x{9fa5}]+$/u', $request['password'])) {
             $data = [
-                'errCode' => 3,
+                'code' => 3,
                 'message' => '密码不规范',
+                'data' => []
+            ];
+            return $data;
+        }
+
+        if (!preg_match('/^1[34578]\d{9}$/', $request['phone'])) {
+            $data = [
+                'code' => 3,
+                'message' => '手机号不规范',
                 'data' => []
             ];
             return $data;
