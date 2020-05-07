@@ -28,7 +28,7 @@ class InfoController extends ActiveController
     {
         //查询数据库
         $res_info = User::find()
-            ->select('user_name,full_name,sex,age,address')
+            ->select('user_name,full_name')
             ->where(['id' => $u_id, 'status' => 1])
             ->asArray()
             ->one();

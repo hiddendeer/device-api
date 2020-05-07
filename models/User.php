@@ -21,8 +21,6 @@ class User extends ActiveRecord
     {
         return [
             [['id', 'user_name', 'user_password', 'full_name','phone','create_time'], 'required'],
-            [['sex','age'], 'integer'],
-            [['avatar','address'], 'string', 'max' => 200],
         ];
     }
 
@@ -37,10 +35,6 @@ class User extends ActiveRecord
             'full_name' => 'full_name',
             'user_password' => 'user_password',
             'phone' => 'phone',
-            'sex' => 'sex',
-            'age' => 'age',
-            'avatar' => 'avatar',
-            'address' => 'address',
             'create_time' => 'create_time'
         ];
     }
